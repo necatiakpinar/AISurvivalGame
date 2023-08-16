@@ -5,6 +5,7 @@ using System.Linq;
 using Abilities;
 using Managers;
 using UnityEngine;
+using Zenject;
 
 public class PlayerActor : BaseActor
 {
@@ -30,5 +31,10 @@ public class PlayerActor : BaseActor
     private void Update()
     {
         _inputController.ListenInput();
+    }
+
+    public void Yell()
+    {
+        Debug.LogError("LOKKA");
     }
 }
