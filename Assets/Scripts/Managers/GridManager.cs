@@ -24,18 +24,6 @@ namespace Managers
         [Header("Tiles")]
         [SerializeField] private Tilemap _tileMap;
 
-
-        private void OnEnable()
-        {
-            EventManager.GetGridManager += (() => { return this; });
-            Grid grid;
-        }
-
-        private void OnDisable()
-        {
-            EventManager.GetGridManager -= (() => { return this; });
-        }
-
         public void CalculateNeighbourTiles(Transform actorTransform, out List<Vector3Int> _walkableNeighbours)
         {
             _walkableNeighbours = new List<Vector3Int>();

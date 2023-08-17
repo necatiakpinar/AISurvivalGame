@@ -12,29 +12,17 @@ public class PlayerActor : BaseActor
     private MovementController _movementController;
     private InputController _inputController;
     
-    private void OnEnable()
+    [Inject]
+    private void Construct(MovementController movementController, InputController inputController)
     {
-        EventManager.GetActivePlayer += (() => { return this; });
+        _movementController = movementController;
+        _inputController = inputController;
+        Debug.LogError("Player constructed!");
     }
-
-    private void OnDisable()
-    {
-        EventManager.GetActivePlayer -= (() => { return this; });
-    }
-
-    private void Start()
-    {
-        _movementController = new MovementController(this.transform);
-        _inputController = new InputController(_movementController);
-    }
-
+    
     private void Update()
     {
         _inputController.ListenInput();
     }
-
-    public void Yell()
-    {
-        Debug.LogError("LOKKA");
-    }
+    
 }

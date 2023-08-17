@@ -24,7 +24,7 @@ public class AIAction
     public Direction direction;
 }
 
-public class ServerAIManager : MonoBehaviour
+public class ServerAIManager 
 { 
     private OpenAIApi openai = new OpenAIApi();
     
@@ -56,24 +56,8 @@ public class ServerAIManager : MonoBehaviour
                             "; 
                             // $"Position: {EventManager.GetActivePlayer().transform.position}";
 
-    private void OnEnable()
-    {
-        EventManager.SendCommand += SendCommand;
-    }
 
-    private void OnDisable()
-    {
-        EventManager.SendCommand += SendCommand;
-    }
-
-    private async void Start()
-    {
-        // var response = await SendCommand();
-        //
-        // Debug.LogError(response.action.direction);
-    }
-
-    private async Task<AIResponse> SendCommand()
+    public async Task<AIResponse> SendCommand()
     {
         var newMessage = new ChatMessage()
         {

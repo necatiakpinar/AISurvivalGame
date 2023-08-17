@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Managers;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 public enum Direction
 {
@@ -26,7 +27,6 @@ namespace Abilities
 
         private bool _isMoving = false;
 
-        private Transform _actorTransform;
         private GridManager _gridManager;
 
         public bool IsMoving
@@ -35,30 +35,30 @@ namespace Abilities
             private set {}
         }
 
-        public MovementController(Transform actorTransform)
+        [Inject]
+        public MovementController(GridManager gridManager)
         {
-            _actorTransform = actorTransform;
-            _gridManager = EventManager.GetGridManager();
+            _gridManager = gridManager;
         }
 
-        public void MoveToTargetPosition(Direction direction)
+        public void MoveToTargetPosition(Transform actorTransform, Direction direction)
         {
             //Calculate current neighbours(8 direction)
-            _gridManager.CalculateNeighbourTiles(_actorTransform, out _walkableNeighbours);
-
+            _gridManager.CalculateNeighbourTiles(actorTransform, out _walkableNeighbours);
+            
             // If direction does not have any walkable tile return
-            Vector3 targetWorldPosition = _gridManager.GetTileWorldPosition(_actorTransform, direction, _walkableNeighbours);
+            Vector3 targetWorldPosition = _gridManager.GetTileWorldPosition(actorTransform, direction, _walkableNeighbours);
             Debug.Log(targetWorldPosition);
             
-            if (!_gridManager.IsDirectionExist(_actorTransform, direction, _walkableNeighbours))
+            if (!_gridManager.IsDirectionExist(actorTransform, direction, _walkableNeighbours))
             {
                 Debug.LogError($"There is no WALKABLE tile in {direction}");
                 return;
             }
-
+            
             _isMoving = true;
             //Start moving the target position
-            _actorTransform.DOMove(targetWorldPosition, _movementDuration).OnComplete(() =>
+            actorTransform.DOMove(targetWorldPosition, _movementDuration).OnComplete(() =>
             {
                 _isMoving = false;
             });

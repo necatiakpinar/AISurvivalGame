@@ -30,6 +30,7 @@ namespace Zenject.Asteroids
             InstallMisc();
             InstallSignals();
             InstallExecutionOrder();
+            
         }
 
         void InstallAsteroids()
