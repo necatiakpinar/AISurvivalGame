@@ -25,13 +25,12 @@
         {
             if (Input.GetKeyDown(KeyCode.Space) && !_movementController.IsMoving)
             {
-                Debug.LogError("test");
                 int randomDirectionIndex = UnityEngine.Random.Range(0, _directions.Count);
                 Direction randomDirection = _directions[randomDirectionIndex];
                
-                AIResponse aiResponse = await _aiManager.SendCommand();
-                Direction aiDirection = aiResponse.action.direction;
-                _movementController.MoveToTargetPosition(_playerActor.transform, aiDirection);
+             //   AIResponse aiResponse = await _aiManager.SendCommand();
+              //  Direction aiDirection = aiResponse.action.direction;
+                _movementController.MoveToTargetPosition(_playerActor.transform, randomDirection);
             }
         }
     }

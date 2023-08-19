@@ -19,9 +19,10 @@ public class AIResponse
 public class AIAction
 {
     public string type;
-    
+
     [JsonConverter(typeof(StringEnumConverter))]
-    public Direction direction;
+    public Direction direction { get; set; }
+
 }
 
 public class ServerAIManager 
@@ -38,10 +39,8 @@ public class ServerAIManager
             Your goal is to exist as best as you see fit and meet your needs.
         
             You have a limited set of capabilities. They are listed below:
-              * Move (North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest)
-              * Wait
-              * Navigate (to an x,y coordinate)
-
+              * Move (North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest) Note: Those are string type
+       
  # Responses  
       
       You must supply your responses in the form of valid JSON objects.  Your responses will specify which of the above actions you intend to take.  Never talk with me, just provide JSON format object. The following is an example of a valid response. For now give random directions!:
@@ -49,7 +48,7 @@ public class ServerAIManager
         {
             action: {
               type: {""move""}
-              direction: ""North"" | ""NorthEast"" | ""East"" | ""SouthEast"" | ""SouthWest"" | ""West"" | ""NorthWest"" | 
+              direction: ""North"" | ""NorthEast"" | ""East"" | ""SouthEast"" | ""SouthWest"" | ""West"" | ""NorthWest"" |
             }
         }      
 
@@ -82,7 +81,8 @@ public class ServerAIManager
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
             messages.Add(message);
-            AIResponse response = JsonUtility.FromJson<AIResponse>(message.Content);
+            AIResponse response = JsonConvert.DeserializeObject<AIResponse>(message.Content);
+            Debug.LogError(message.Content);
             if (response != null)
                 return response;
         }
