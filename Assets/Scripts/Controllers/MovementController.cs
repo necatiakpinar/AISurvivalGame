@@ -13,6 +13,7 @@ using Zenject;
 [JsonConverter(typeof(StringEnumConverter))]
 public enum Direction
 {
+    None,
     North,
     NorthEast,
     East,
@@ -48,26 +49,22 @@ namespace Abilities
 
         public void MoveToTargetPosition(Transform actorTransform, Direction direction)
         {
-            //Calculate current neighbours(8 direction)
-            _gridManager.CalculateNeighbourTiles(actorTransform);
-            
             // If direction does not have any walkable tile return
-        //     Vector3 targetWorldPosition = _gridManager.GetTileWorldPosition(actorTransform, direction, _walkableNeighbours);
-        //     Debug.Log(targetWorldPosition);
-        //     
-        //     if (!_gridManager.IsDirectionExist(actorTransform, direction, _walkableNeighbours))
-        //     {
-        //         Debug.LogError($"There is no WALKABLE tile in {direction}");
-        //         return;
-        //     }
-        //     
-        //     _isMoving = true;
-        //     //Start moving the target position
-        //     actorTransform.DOMove(targetWorldPosition, _movementDuration).OnComplete(() =>
-        //     {
-        //         _isMoving = false;
-        //     });
-        }
-
+            //Vector3 targetWorldPosition = _gridManager.GetTileWorldPosition(actorTransform, direction, _walkableNeighbours);
+            // Debug.Log(targetWorldPosition);
+            //
+            // if (!_gridManager.IsDirectionExist(actorTransform, direction, _walkableNeighbours))
+            // {
+            //     Debug.LogError($"There is no WALKABLE tile in {direction}");
+            //     return;
+            // }
+            //
+            // _isMoving = true;
+            // //Start moving the target position
+            // actorTransform.DOMove(targetWorldPosition, _movementDuration).OnComplete(() =>
+            // {
+            //     _isMoving = false;
+            // });
+            }
     }
 }

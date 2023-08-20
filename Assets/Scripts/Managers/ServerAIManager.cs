@@ -8,6 +8,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using OpenAI;
 using UnityEngine;
+using Zenject;
 
 [Serializable]
 public class AIResponse
@@ -25,38 +26,39 @@ public class AIAction
 
 }
 
-public class ServerAIManager 
+public class ServerAIManager : IInitializable
 { 
     private OpenAIApi openai = new OpenAIApi();
     
     private List<ChatMessage> messages = new List<ChatMessage>();
 
     private string test = "move";
-
     private string prompt = @"
 
             You are acting as an agent living in a simulated 2 dimensional universe. 
             Your goal is to exist as best as you see fit and meet your needs.
         
             You have a limited set of capabilities. They are listed below:
-              * Move (North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest) Note: Those are string type
+              * Move (direction of the walkable TileType in neighbour tile information) Note: Those are string type. Check the Perceptions and provide direction of Walkable TileType
        
  # Responses  
       
-      You must supply your responses in the form of valid JSON objects.  Your responses will specify which of the above actions you intend to take.  Never talk with me, just provide JSON format object. The following is an example of a valid response. For now give random directions!:
+      You must supply your responses in the form of valid JSON objects. 
       
         {
             action: {
               type: {""move""}
-              direction: ""North"" | ""NorthEast"" | ""East"" | ""SouthEast"" | ""SouthWest"" | ""West"" | ""NorthWest"" |
+              direction: (Direction of valid TileType within Walkable in neighbour tile information.) No matter what happens, just provide Walkable tile's direction. Do not provide random direction!
             }
         }      
 
-                            "; 
-                            // $"Position: {EventManager.GetActivePlayer().transform.position}";
+       ";
 
 
-    public async Task<AIResponse> SendCommand()
+    private string perceptions;
+    
+    
+    public async Task<AIResponse> SendCommand(string directionTileInfos)
     {
         var newMessage = new ChatMessage()
         {
@@ -64,7 +66,21 @@ public class ServerAIManager
             Content = "Test"
         };
         
-        if (messages.Count == 0) newMessage.Content = prompt + "\n";
+        perceptions = $@"
+
+        # Perceptions
+            You will have access to data to help you make your decisions on what to do next
+            For now, this is the information you have access to:
+                * Neighbour Tile Information: {directionTileInfos}  
+                * Check Neighbour tile information data, and analyze TileType variable in directions. For Move action always return Walkable tile types direction. Do not change your direction if it is Walkable.                      
+        ";
+
+        //Send final prompt always!
+        string finalPrompt = prompt;
+        finalPrompt += perceptions; 
+        
+        Debug.LogError(finalPrompt);
+        if (messages.Count == 0) newMessage.Content = finalPrompt + "\n";
 
         messages.Add(newMessage);
         
@@ -94,5 +110,10 @@ public class ServerAIManager
 
         return null;
 
+    }
+
+    public void Initialize()
+    {
+        Debug.LogError("AI Manager initialised");
     }
 }

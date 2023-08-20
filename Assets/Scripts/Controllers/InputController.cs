@@ -12,12 +12,17 @@
         private MovementController _movementController;
         private PlayerActor _playerActor;
         private ServerAIManager _aiManager;
+        private GridManager _gridManager;
+        
+        private string _directionTileInfosJson;
+        
         [Inject]
-        public InputController(PlayerActor playerActor, ServerAIManager aiManager, MovementController movementController)
+        public InputController(PlayerActor playerActor, ServerAIManager aiManager, MovementController movementController, GridManager gridManager)
         {
             _playerActor = playerActor;
             _aiManager = aiManager;
             _movementController = movementController;
+            _gridManager = gridManager;
             _directions = Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList();
         }
 
@@ -27,9 +32,13 @@
             {
                 int randomDirectionIndex = UnityEngine.Random.Range(0, _directions.Count);
                 Direction randomDirection = _directions[randomDirectionIndex];
-               
-             //   AIResponse aiResponse = await _aiManager.SendCommand();
-              //  Direction aiDirection = aiResponse.action.direction;
+
+                //Calculate current neighbours(8 direction)
+                _directionTileInfosJson = _gridManager.CalculateNeighbourTiles(_playerActor.transform);
+        
+                AIResponse aiResponse = await _aiManager.SendCommand(_directionTileInfosJson);
+                Direction aiDirection = aiResponse.action.direction;
+                Debug.LogError(aiDirection);
                 _movementController.MoveToTargetPosition(_playerActor.transform, randomDirection);
             }
         }

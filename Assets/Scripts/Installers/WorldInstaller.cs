@@ -9,7 +9,7 @@ public class WorldInstaller : MonoInstaller<WorldInstaller>
     {
         Container.Bind<MovementController>().AsTransient();
         Container.Bind<InputController>().AsSingle(); //Only player can call it!
-        Container.Bind<ServerAIManager>().AsSingle();
+        Container.BindInterfacesAndSelfTo<ServerAIManager>().AsSingle();
     }
         
 }

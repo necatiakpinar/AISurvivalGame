@@ -38,25 +38,25 @@ namespace Managers
     }
 
     [Serializable]
-    public class TileInfo
+    public class TileInfoData
     {
         [SerializeField] private TileType _tileType;
-       // [SerializeField] private TileBase _tile;
+        [SerializeField] private Vector3Int _tilePosition;
 
         public TileType TileType
         {
             get { return _tileType;}
             private set {}
         }
-        // public TileBase Tile
-        // {
-        //     get { return _tile; }
-        //     private set {}
-        // }
-        public TileInfo(TileType tileType)
+        public Vector3Int TilePosition
+        {
+            get { return _tilePosition; }
+            private set {}
+        }
+        public TileInfoData(TileType tileType, Vector3Int tilePosition)
         {
             _tileType = tileType;
-            //_tile = tile;
+            _tilePosition = tilePosition;
         }
     }
     
@@ -78,7 +78,7 @@ namespace Managers
         [SerializeField] private List<TileMapInfo> _tileMapContainer;
         [SerializeField] private Tilemap _tileMap;
         
-        private Dictionary<Direction, List<TileInfo>> _directionTileInfos;
+        //private Dictionary<Direction, List<TileInfoData>> _directionTileInfos;
         
         private void Awake()
         {
@@ -87,16 +87,16 @@ namespace Managers
                 throw new Exception();
             
         }
-        public void CalculateNeighbourTiles(Transform actorTransform)
+        public string CalculateNeighbourTiles(Transform actorTransform)
         {
-            _directionTileInfos = new Dictionary<Direction, List<TileInfo>>();
+            Dictionary<Direction, List<TileInfoData>> _directionTileInfos = new Dictionary<Direction, List<TileInfoData>>();
             TileMapInfo tileMapInfo = new TileMapInfo();
-            List<TileInfo> tileInfos = new List<TileInfo>();
+            List<TileInfoData> tileInfos = new List<TileInfoData>();
             Vector3Int _neighbourPosition = Vector3Int.zero;
             
             for (int i = 0; i < _directions.Count; i++)
             {
-                tileInfos.Clear();
+                tileInfos = new List<TileInfoData>();
                 
                 for (int j = 0; j < _tileMapContainer.Count; j++)
                 {
@@ -105,30 +105,21 @@ namespace Managers
                     //Player position + neighbour direction 
                     _neighbourPosition = tileMapInfo.TileMap.WorldToCell(actorTransform.position) + _directions[i];
 
-                    if (IsTileHasGivenType(_neighbourPosition, tileMapInfo.TileType))
+                    if (tileMapInfo.TileMap.HasTile(_neighbourPosition))
                     {
-                        TileBase tile = tileMapInfo.TileMap.GetTile(_neighbourPosition);
-                        TileInfo tileInfo = new TileInfo(tileMapInfo.TileType);
-                        tileInfos.Add(tileInfo);
+                        Debug.LogError(_directions[i].ToString() + tileMapInfo.TileType + _neighbourPosition.ToString());
+                        TileInfoData tileInfoData = new TileInfoData(tileMapInfo.TileType, _neighbourPosition);
+                        tileInfos.Add(tileInfoData);
+                        
                     }
-                }
 
+                }
                 _directionTileInfos.Add((Direction)i, tileInfos);
             }
-            
-            Debug.LogError(_directionTileInfos[Direction.East].Count);
-
-    
-            // Register the custom converter when initializing JSON.NET
-            JsonSerializerSettings settings = new JsonSerializerSettings
-            {
-                Converters = {new Vector3Converter() }
-            };
-
-            
-            //string jsonData = JsonConvert.SerializeObject(_directionTileInfos, settings);
+        
             string jsonData = JsonConvert.SerializeObject(_directionTileInfos);
             Debug.LogError(jsonData);
+            return jsonData;
         }
         
         public bool IsDirectionExist(Transform actorTransform, Direction direction, List<Vector3Int> _walkableNeighbours)
@@ -187,32 +178,7 @@ namespace Managers
 
             return false;
         }
-        public bool IsTileHasGivenType(Vector3Int tileWorldPosition, TileType tileType)
-        {
-            for (int i = 0; i < _tileMapContainer.Count; i++)
-                return _tileMapContainer[i].TileMap.HasTile(tileWorldPosition) && _tileMapContainer[i].TileType == tileType;
 
-            return false;
-        }
-        
-        public bool IsTileHasOnlyGivenType(Vector3Int tileWorldPosition, TileType tileType)
-        {
-            TileMapInfo tileMapInfo;
-            
-            for (int i = 0; i < _tileMapContainer.Count; i++)
-            {
-                tileMapInfo = _tileMapContainer[i];
-                if (tileMapInfo.TileMap.HasTile(tileWorldPosition) && tileMapInfo.TileType != tileType)
-                    return false;
-            }
-
-            return true;
-        }
-
-        public List<TileInfo> GetTileInDirection(Direction direction)
-        {
-            return _directionTileInfos[direction];
-        }
     }
 }
 
