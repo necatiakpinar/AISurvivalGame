@@ -39,16 +39,16 @@ public class ServerAIManager : IInitializable
             Your goal is to exist as best as you see fit and meet your needs.
         
             You have a limited set of capabilities. They are listed below:
-              * Move (direction of the walkable TileType in neighbour tile information) Note: Those are string type. Check the Perceptions and provide direction of Walkable TileType
+              * Move (direction of the walkable TileType in neighbour tile information)
        
  # Responses  
       
-      You must supply your responses in the form of valid JSON objects. 
+      You must supply your responses in the form of valid JSON objects. And do not give different directions other than Walkable tile in neighbour tile information.
       
         {
             action: {
               type: {""move""}
-              direction: (Direction of valid TileType within Walkable in neighbour tile information.) No matter what happens, just provide Walkable tile's direction. Do not provide random direction!
+              direction: (Exact Direction of Walkable tile info's tile type in neighbour tile information) 
             }
         }      
 
@@ -58,7 +58,7 @@ public class ServerAIManager : IInitializable
     private string perceptions;
     
     
-    public async Task<AIResponse> SendCommand(string directionTileInfos)
+    public async Task<AIResponse> SendCommand(Vector3 actorPosition, string directionTileInfos)
     {
         var newMessage = new ChatMessage()
         {
@@ -71,8 +71,9 @@ public class ServerAIManager : IInitializable
         # Perceptions
             You will have access to data to help you make your decisions on what to do next
             For now, this is the information you have access to:
+                * Actor Position: {actorPosition}
                 * Neighbour Tile Information: {directionTileInfos}  
-                * Check Neighbour tile information data, and analyze TileType variable in directions. For Move action always return Walkable tile types direction. Do not change your direction if it is Walkable.                      
+                * Check Neighbour tile information data. For Move action always if tile has Walkable type, return its direction. If previous direction has walkable give it.
         ";
 
         //Send final prompt always!

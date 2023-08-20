@@ -101,7 +101,6 @@ namespace Managers
                 for (int j = 0; j < _tileMapContainer.Count; j++)
                 {
                     tileMapInfo = _tileMapContainer[j];
-
                     //Player position + neighbour direction 
                     _neighbourPosition = tileMapInfo.TileMap.WorldToCell(actorTransform.position) + _directions[i];
 
@@ -177,6 +176,15 @@ namespace Managers
                     return true;
 
             return false;
+        }
+
+        public bool IsActorHasGivenTypeTileInDirection(string _directionTileInfoJson, Direction direction, TileType tileType)
+        {
+            Dictionary<Direction, List<TileInfoData>> directionTileInfo = JsonConvert.DeserializeObject<Dictionary<Direction, List<TileInfoData>>>(_directionTileInfoJson);
+            if (directionTileInfo[direction].Count == 0)
+                return false;
+            
+            return directionTileInfo[direction][0].TileType == tileType;
         }
 
     }
