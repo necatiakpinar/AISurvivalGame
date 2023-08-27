@@ -47,24 +47,14 @@ namespace Abilities
             _gridManager = gridManager;
         }
 
-        public void MoveToTargetPosition(Transform actorTransform, Direction direction)
+        public void MoveToTargetPosition(Transform actorTransform, Vector3 movePosition)
         {
-            // If direction does not have any walkable tile return
-            //Vector3 targetWorldPosition = _gridManager.GetTileWorldPosition(actorTransform, direction, _walkableNeighbours);
-            // Debug.Log(targetWorldPosition);
-            //
-            // if (!_gridManager.IsDirectionExist(actorTransform, direction, _walkableNeighbours))
-            // {
-            //     Debug.LogError($"There is no WALKABLE tile in {direction}");
-            //     return;
-            // }
-            //
-            // _isMoving = true;
-            // //Start moving the target position
-            // actorTransform.DOMove(targetWorldPosition, _movementDuration).OnComplete(() =>
-            // {
-            //     _isMoving = false;
-            // });
+            _isMoving = true;
+             //Start moving the target position
+             actorTransform.DOMove(movePosition, _movementDuration).OnComplete(() =>
+             {
+                 _isMoving = false;
+             });
             }
     }
 }

@@ -48,7 +48,7 @@ public class ServerAIManager : IInitializable
         {
             action: {
               type: {""move""}
-              direction: (Exact Direction of Walkable tile info's tile type in neighbour tile information) 
+              direction: (ActorDirectionEnvironmentData direction which has tiles exist Walkable tile info) 
             }
         }      
 
@@ -73,7 +73,7 @@ public class ServerAIManager : IInitializable
             For now, this is the information you have access to:
                 * Actor Position: {actorPosition}
                 * Neighbour Tile Information: {directionTileInfos}  
-                * Check Neighbour tile information data. For Move action always if tile has Walkable type, return its direction. If previous direction has walkable give it.
+                * ActorDirectionEnvironmentData has direction and tiles which is located in that direction. If list of tiles is not null and they has Walkable tile type and direction is not None, simply return that direction in move action. Never return empty tiles direction ever.  
         ";
 
         //Send final prompt always!

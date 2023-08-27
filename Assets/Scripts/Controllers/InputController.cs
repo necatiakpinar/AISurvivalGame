@@ -15,7 +15,10 @@
         private GridManager _gridManager;
         
         private string _directionTileInfosJson;
-        
+        private Vector3? _movePosition;
+
+        private List<ActorDirectionEnvironmentData> _directionEnvironmentData = new List<ActorDirectionEnvironmentData>();
+
         [Inject]
         public InputController(PlayerActor playerActor, ServerAIManager aiManager, MovementController movementController, GridManager gridManager)
         {
@@ -30,26 +33,28 @@
         {
             if (Input.GetKeyDown(KeyCode.Space) && !_movementController.IsMoving)
             {
-                // int randomDirectionIndex = UnityEngine.Random.Range(0, _directions.Count);
-                // Direction randomDirection = _directions[randomDirectionIndex];
+                int randomDirectionIndex = UnityEngine.Random.Range(0, _directions.Count);
+                Direction randomDirection = _directions[randomDirectionIndex];
 
-                //Calculate current neighbours(8 direction)
-                _directionTileInfosJson = _gridManager.CalculateNeighbourTiles(_playerActor.transform);
-        
-                AIResponse aiResponse = await _aiManager.SendCommand(_playerActor.transform.position, _directionTileInfosJson);
-                Direction aiDirection = aiResponse.action.direction;
-                Debug.LogError(aiDirection);
-    
+                // //Calculate current neighbours(8 direction)
+                _directionTileInfosJson = _gridManager.CalculateEnvironmentDataAsJSON(_playerActor.transform);
                 
-                // while (!_gridManager.IsActorHasGivenTypeTileInDirection(_directionTileInfosJson,aiDirection, TileType.Walkable))
-                // {
-                //     Debug.LogError(aiDirection + "does not have WALKABLE tile on it! New direction request has been made.");
-                //     aiResponse = await _aiManager.SendCommand(_playerActor.transform.position, _directionTileInfosJson);
-                //     aiDirection = aiResponse.action.direction;
-                //     Debug.LogError("New Direction: " + aiDirection);
-                // }
+                // AIResponse aiResponse = await _aiManager.SendCommand(_playerActor.transform.position, _directionTileInfosJson);
+                // Direction aiDirection = aiResponse.action.direction;
+                // Debug.LogError(aiDirection);
+                // _playerActor.CalculateEnvironmentData();
+                // _movePosition = _playerActor.GetWalkableTilePosition(aiDirection);
+                // _movementController.MoveToTargetPosition(_playerActor.transform, (Vector3)_movePosition);
                 
-                _movementController.MoveToTargetPosition(_playerActor.transform, aiDirection);
+                // //Calculate current neighbours(8 direction)
+                 _playerActor.CalculateEnvironmentData();
+                 _movePosition = _playerActor.GetWalkableTilePosition(Direction.East);
+                
+                //Check given direction has walkable tile, than send move trigger to movement controller.
+                 if (_movePosition != null)
+                 {
+                     _movementController.MoveToTargetPosition(_playerActor.transform, (Vector3)_movePosition);    
+                 }
             }
         }
         
