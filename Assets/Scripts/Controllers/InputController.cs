@@ -47,13 +47,13 @@
                 // _movementController.MoveToTargetPosition(_playerActor.transform, (Vector3)_movePosition);
                 
                 // //Calculate current neighbours(8 direction)
-                 _playerActor.CalculateEnvironmentData();
-                 _movePosition = _playerActor.GetWalkableTilePosition(Direction.East);
+                 _playerActor.AIController.CalculateEnvironmentData();
+                 _movePosition = _playerActor.AIController.GetWalkableTilePosition(Direction.East);
                 
                 //Check given direction has walkable tile, than send move trigger to movement controller.
                  if (_movePosition != null)
                  {
-                     _movementController.MoveToTargetPosition(_playerActor.transform, (Vector3)_movePosition);    
+                     _playerActor.MovementController.MoveToTargetPosition((Vector3)_movePosition);    
                  }
             }
         }

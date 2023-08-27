@@ -28,13 +28,12 @@ namespace Abilities
 {
     public class MovementController
     {
-        private float _movementDuration = 0.5f;
-        private List<Vector3Int> _walkableNeighbours = new List<Vector3Int>();
-
-        private bool _isMoving = false;
-
+        private Transform _actorTransform;
         private GridManager _gridManager;
-
+        
+        private float _movementDuration = 0.5f;
+        private bool _isMoving = false;
+        
         public bool IsMoving
         {
             get { return _isMoving;}
@@ -47,11 +46,16 @@ namespace Abilities
             _gridManager = gridManager;
         }
 
-        public void MoveToTargetPosition(Transform actorTransform, Vector3 movePosition)
+        public void Initialize(Transform actorTransform)
+        {
+            _actorTransform = actorTransform;
+        }
+
+        public void MoveToTargetPosition(Vector3 movePosition)
         {
             _isMoving = true;
              //Start moving the target position
-             actorTransform.DOMove(movePosition, _movementDuration).OnComplete(() =>
+             _actorTransform.DOMove(movePosition, _movementDuration).OnComplete(() =>
              {
                  _isMoving = false;
              });
