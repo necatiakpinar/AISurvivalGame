@@ -1,23 +1,20 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Abilities;
 using Managers;
 using UnityEngine;
 using Zenject;
 
-public class PlayerActor : BaseActor
+public class EnemyActor : BaseActor
 {
     private AIController _aiController;
-    private InputController _inputController;
-
     private MovementController _movementController;
     
     public AIController AIController
     {
         get { return _aiController;}
         private set {}
+        
     }
     public MovementController MovementController
     {
@@ -26,22 +23,13 @@ public class PlayerActor : BaseActor
     }
     
     [Inject]
-    private void Construct(MovementController movementController,  AIController aiController, InputController inputController)
+    private void Construct(MovementController movementController, AIController aiController)
     {
         _movementController = movementController;
         _aiController = aiController;
-        _inputController = inputController;
-
+        
         //Initialize controllers
         _aiController.Initialize(this.transform);
         _movementController.Initialize(this.transform);
-        
-        Debug.LogError("Player constructed!");
     }
-    
-    private void Update()
-    {
-        _inputController.ListenInput();
-    }
-
 }
