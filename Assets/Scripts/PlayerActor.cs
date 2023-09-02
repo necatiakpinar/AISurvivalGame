@@ -13,20 +13,21 @@ public class PlayerActor : BaseActor
     private InputController _inputController;
 
     private MovementController _movementController;
-    
+
     public AIController AIController
     {
-        get { return _aiController;}
-        private set {}
+        get { return _aiController; }
+        private set { }
     }
+
     public MovementController MovementController
     {
-        get { return _movementController;}
-        private set {}
+        get { return _movementController; }
+        private set { }
     }
-    
+
     [Inject]
-    private void Construct(MovementController movementController,  AIController aiController, InputController inputController)
+    private void Construct(MovementController movementController, AIController aiController, InputController inputController)
     {
         _movementController = movementController;
         _aiController = aiController;
@@ -35,13 +36,10 @@ public class PlayerActor : BaseActor
         //Initialize controllers
         _aiController.Initialize(this.transform);
         _movementController.Initialize(this.transform);
-        
-        Debug.LogError("Player constructed!");
     }
-    
+
     private void Update()
     {
         _inputController.ListenInput();
     }
-
 }
