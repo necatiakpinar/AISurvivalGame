@@ -15,31 +15,31 @@ namespace Managers.CardBattleGame
 
     public class BattleStateManager : MonoBehaviour
     {
-        private State _initializationState;
-        private State _battleState;
-        private State _resultState;
-        private State _victoryState;
-        private State _defeatState;
+        private BaseState _initializationBaseState;
+        private BaseState _battleBaseState;
+        private BaseState _resultBaseState;
+        private BaseState _victoryBaseState;
+        private BaseState _defeatBaseState;
 
-        private State _currentState;
+        private BaseState _currentBaseState;
 
         public BattleStateManager()
         {
-            _initializationState = new InitializationState(ChangeState);
-            _battleState = new BattleState(ChangeState);
-            _resultState = new ResultState(ChangeState);
-            _victoryState = new VictoryState(ChangeState);
-            _defeatState = new DefeatState(ChangeState);
+            _initializationBaseState = new InitializationBaseState(ChangeState);
+            _battleBaseState = new BattleBaseState(ChangeState);
+            _resultBaseState = new ResultBaseState(ChangeState);
+            _victoryBaseState = new VictoryBaseState(ChangeState);
+            _defeatBaseState = new DefeatBaseState(ChangeState);
 
             //Give initial state for first state.
-            _currentState = _initializationState;
-            _currentState.Start();
+            _currentBaseState = _initializationBaseState;
+            _currentBaseState.Start();
         }
 
         private void Update()
         {
-            if (_currentState != null)
-                _currentState.Update();
+            if (_currentBaseState != null)
+                _currentBaseState.Update();
         }
 
         private void ChangeState(BattleStateTypes _changedStateType)
@@ -47,23 +47,23 @@ namespace Managers.CardBattleGame
             switch (_changedStateType)
             {
                 case BattleStateTypes.Initialization:
-                    _currentState = _battleState;
+                    _currentBaseState = _battleBaseState;
                     break;
                 case BattleStateTypes.Battle:
-                    _currentState = _battleState;
+                    _currentBaseState = _battleBaseState;
                     break;
                 case BattleStateTypes.Result:
-                    _currentState = _resultState;
+                    _currentBaseState = _resultBaseState;
                     break;
                 case BattleStateTypes.Victory:
-                    _currentState = _victoryState;
+                    _currentBaseState = _victoryBaseState;
                     break;
                 case BattleStateTypes.Defeat:
-                    _currentState = _defeatState;
+                    _currentBaseState = _defeatBaseState;
                     break;
             }
             
-            _currentState.Start();
+            _currentBaseState.Start();
         }
     }
 }

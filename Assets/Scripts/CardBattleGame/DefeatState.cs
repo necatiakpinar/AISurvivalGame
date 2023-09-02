@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Managers.CardBattleGame
 {
-    public class DefeatState : State
+    public class DefeatBaseState : BaseState
     {
         private Action<BattleStateTypes> _onChangeState;
 
-        public DefeatState(Action<BattleStateTypes> onChangeState)
+        public DefeatBaseState(Action<BattleStateTypes> onChangeState)
         {
             _onChangeState = onChangeState;
         }
