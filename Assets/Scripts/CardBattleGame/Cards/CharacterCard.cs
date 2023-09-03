@@ -3,7 +3,7 @@
 namespace Managers.CardBattleGame.Cards
 {
     [CreateAssetMenu(fileName = "Data", menuName = "Data/Card/CharacterCard", order = 1)]
-    public class CharacterCards : BaseCard
+    public class CharacterCard : BaseCard
     {
         [SerializeField] private string _characterName;
 
