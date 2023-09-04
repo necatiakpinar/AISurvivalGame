@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Managers.CardBattleGame;
 using Managers.CardBattleGame.Cards;
+using Managers.Misc;
 using UnityEngine;
 
 namespace Managers.Data
@@ -22,5 +23,6 @@ namespace Managers.Data
 
             return null;
         }
+        
     }
 }

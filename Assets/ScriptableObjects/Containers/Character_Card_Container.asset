@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterCards:
   - {fileID: 11400000, guid: f7ceecd1efdea914dae2e2b168aea79b, type: 2}
+  - {fileID: 11400000, guid: 7dbd455d0e4f8bc4b87d5b7377a1a073, type: 2}
+  - {fileID: 11400000, guid: 4cca3d20eb887bf469df81e65728dd58, type: 2}

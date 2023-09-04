@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Managers.Misc;
+using UnityEngine;
 
 namespace Managers.CardBattleGame.Cards
 {

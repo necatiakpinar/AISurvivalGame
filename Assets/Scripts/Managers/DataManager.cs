@@ -1,4 +1,5 @@
 ﻿using Managers.CardBattleGame;
+using Managers.Misc;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -27,7 +28,7 @@ namespace Managers.Data
 
         public ItemCardContainer ItemCardContainer
         {
-            get { return ItemCardContainer; }
+            get { return _itemCardContainer; }
             private set { }
         }
 
@@ -45,22 +46,7 @@ namespace Managers.Data
                 Destroy(this);
             }
         }
-
-        public BaseCard GetCard(CardType cardType, CardElementType elementType)
-        {
-            switch (cardType)
-            {
-                case CardType.Character:
-                    CharacterCardContainer.GetCard(elementType);
-                    break;
-                case CardType.Item:
-                    ItemCardContainer.GetCard(elementType);
-                    break;
-            }
-
-            return null;
-        }
-
+        
         public T GetCard<T>(CardType cardType, CardElementType elementType) where T : BaseCard
         {
             if (!typeof(T).IsSubclassOf(typeof(BaseCard)))

@@ -1,4 +1,6 @@
-﻿namespace Managers.CardBattleGame
+﻿using Managers.Misc;
+
+namespace Managers.CardBattleGame
 {
     public interface IContainer<T>
     {

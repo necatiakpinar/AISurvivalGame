@@ -23,7 +23,7 @@ namespace Managers.CardBattleGame
 
         private BaseState _currentBaseState;
 
-        public BattleStateManager()
+        public void Start()
         {
             _initializationBaseState = new InitializationBaseState(ChangeState);
             _battleBaseState = new BattleBaseState(ChangeState);
@@ -62,7 +62,7 @@ namespace Managers.CardBattleGame
                     _currentBaseState = _defeatBaseState;
                     break;
             }
-            
+
             _currentBaseState.Start();
         }
     }

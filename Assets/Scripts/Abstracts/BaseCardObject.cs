@@ -1,21 +1,10 @@
-﻿using TMPro;
+﻿using Managers.Misc;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Managers.CardBattleGame
 {
-    public enum CardType
-    {
-        None = 0,
-        Character = 10,
-        Item = 20
-    }
-
-    public enum CardElementType
-    {
-        None = 0,
-        Necati = 1,
-    }
 
     public abstract class BaseCardObject : MonoBehaviour
     {

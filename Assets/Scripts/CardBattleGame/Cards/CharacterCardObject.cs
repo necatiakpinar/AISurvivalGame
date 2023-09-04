@@ -1,4 +1,5 @@
 ﻿using Managers.CardBattleGame.Cards;
+using Managers.Misc;
 using TMPro;
 using UnityEngine;
 
@@ -18,7 +19,9 @@ namespace Managers.CardBattleGame
         {
             _characterCardData = (CharacterCard)cardData;
 
-            _healthLabel.text = _characterCardData.CharacterName;
+            _healthLabel.text = _characterCardData.ElementType.ToString();
+            
+            Debug.LogError(_characterCardData.test);
         }
     }
 }

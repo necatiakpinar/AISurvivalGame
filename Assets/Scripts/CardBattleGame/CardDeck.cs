@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Managers.Misc;
+using UnityEngine;
 
 namespace Managers.CardBattleGame
 {
@@ -7,7 +9,11 @@ namespace Managers.CardBattleGame
     {
         private List<BaseCard> _cards;
 
-        public Action<BaseCard> OnCardAdded;
+        public List<BaseCard> Cards
+        {
+            get { return _cards; }
+            private set { }
+        }
 
         public CardDeck()
         {
@@ -17,29 +23,30 @@ namespace Managers.CardBattleGame
         public void AddCard(BaseCard addedCard)
         {
             //If card exist in the deck, just return
-            if (_cards.Contains(addedCard))
-                return;
+            for (int i = 0; i < _cards.Count; i++)
+            {
+                if (addedCard.ElementType == _cards[i].ElementType)
+                    return;
+            }
 
             _cards.Add(addedCard);
         }
 
         public void RemoveCard(BaseCard addedCard)
         {
-            //If card does not exist in the deck, just return
-            if (!_cards.Contains(addedCard))
-                return;
-
-            _cards.Remove(addedCard);
+            for (int i = 0; i < _cards.Count; i++)
+                if (addedCard.ElementType == _cards[i].ElementType)
+                    _cards.Remove(addedCard);
         }
 
-        public void GetCard(BaseCard addedCard)
+        public BaseCard GetCard(CardElementType elementType)
         {
-            //If card exist in the deck, just return
-            if (_cards.Contains(addedCard))
-                return;
+            for (int i = 0; i < _cards.Count; i++)
+                if (_cards[i].ElementType == elementType)
+                    return _cards[i];
 
-            _cards.Add(addedCard);
+            Debug.LogError($"{elementType} Card does not exist in the deck!");
+            return null;
         }
-
     }
 }
