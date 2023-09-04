@@ -10,7 +10,6 @@ namespace Managers
 {
     public class BattleUIWindow : MonoBehaviour
     {
-
         [SerializeField] private Transform _cardParent;
 
         private DataManager _dataManager;
@@ -24,8 +23,11 @@ namespace Managers
         {
             //Test
             CharacterCardObject characterCardObject = (CharacterCardObject)CreateCard(CardType.Character);
-            CharacterCard characterCardData = _dataManager.CharacterCardContainer.CharacterCards[0];
+            CharacterCard characterCardData = _dataManager.GetCard<CharacterCard>(CardType.Character, CardElementType.Necati);
             characterCardObject.Init(characterCardData);
+
+            //Test
+            Player.CardDeck.AddCard(characterCardData);
         }
 
         public BaseCardObject CreateCard(CardType cardType)
@@ -33,10 +35,10 @@ namespace Managers
             switch (cardType)
             {
                 case CardType.Character:
-                    return GameObject.Instantiate(_dataManager.CardContainer.CharacterCardObject, _cardParent);
+                    return GameObject.Instantiate(_dataManager.CardObjectContainer.CharacterCardObject, _cardParent);
                     break;
                 case CardType.Item:
-                    return GameObject.Instantiate(_dataManager.CardContainer.ItemCardPF, _cardParent);
+                    return GameObject.Instantiate(_dataManager.CardObjectContainer.ItemCardPF, _cardParent);
                     break;
             }
 

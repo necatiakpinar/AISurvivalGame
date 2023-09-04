@@ -6,6 +6,7 @@ namespace Managers.CardBattleGame.Cards
     public class CharacterCard : BaseCard
     {
         [SerializeField] private string _characterName;
+        public override CardType CardType => CardType.Character;
 
         public string CharacterName
         {

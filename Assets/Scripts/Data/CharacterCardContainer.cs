@@ -1,18 +1,26 @@
 ﻿using System.Collections.Generic;
+using Managers.CardBattleGame;
 using Managers.CardBattleGame.Cards;
 using UnityEngine;
 
 namespace Managers.Data
 {
     [CreateAssetMenu(fileName = "CharacterCardContainer", menuName = "DataContainer/CharacterCardContainer", order = 1)]
-    public class CharacterCardContainer : DataContainer
+    public class CharacterCardContainer : DataContainer, IContainer<CharacterCard>
     {
         [SerializeField] private List<CharacterCard> _characterCards;
 
-        public List<CharacterCard> CharacterCards
+        public CharacterCard GetCard(CardElementType elementType)
         {
-            get { return _characterCards; }
-            private set { }
+            CharacterCard characterCard;
+            for (int i = 0; i < _characterCards.Count; i++)
+            {
+                characterCard = _characterCards[i];
+                if (elementType == characterCard.ElementType)
+                    return characterCard;
+            }
+
+            return null;
         }
     }
 }

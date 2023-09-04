@@ -11,6 +11,12 @@ namespace Managers.CardBattleGame
         Item = 20
     }
 
+    public enum CardElementType
+    {
+        None = 0,
+        Necati = 1,
+    }
+
     public abstract class BaseCardObject : MonoBehaviour
     {
         [SerializeField] private Image _cardImage;

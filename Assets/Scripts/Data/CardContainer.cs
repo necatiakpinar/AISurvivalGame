@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Managers.Data
 {
     [CreateAssetMenu(fileName = "CardContainer", menuName = "DataContainer/CardContainer", order = 1)]
-    public class CardContainer : DataContainer
+    public class CardObjectContainer : DataContainer
     {
         [SerializeField] private CharacterCardObject _characterCardPF;
         [SerializeField] private ItemCardObject _itemCardPF;
