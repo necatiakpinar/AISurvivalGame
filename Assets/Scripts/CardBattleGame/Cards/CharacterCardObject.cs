@@ -17,6 +17,7 @@ namespace Managers.CardBattleGame
 
         public override void Init(BaseCard cardData)
         {
+            base.Init(cardData);
             _characterCardData = (CharacterCard)cardData;
 
             _healthLabel.text = _characterCardData.ElementType.ToString();

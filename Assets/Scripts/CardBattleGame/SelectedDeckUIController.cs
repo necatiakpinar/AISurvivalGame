@@ -11,15 +11,16 @@ namespace Managers.CardBattleGame
 
         private List<BaseCardObject> _selectedCards;
         
-        public void AddSelectedCardsToDeck(List<BaseCardObject> _selectedCards)
+        public void AddSelectedCardsToDeck(List<BaseCardObject> selectedCards)
         {
-            for (int i = 0; i < _selectedCards.Count; i++)
+            for (int i = 0; i < selectedCards.Count; i++)
             {
-                BaseCardObject cardObject = _selectedCards[i];
+                BaseCardObject cardObject = selectedCards[i];
                 cardObject.transform.parent = _deckContainer;
                 cardObject.transform.position = Vector3.zero;
 
             }
         }
+        
     }
 }

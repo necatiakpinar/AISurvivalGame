@@ -15,6 +15,7 @@ namespace Managers.CardBattleGame
 
         public override void Init(BaseCard cardData)
         {
+            base.Init(cardData);
             _itemCardData = (ItemCard)cardData;
         }
 

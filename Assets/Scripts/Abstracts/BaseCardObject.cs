@@ -21,7 +21,18 @@ namespace Managers.CardBattleGame
             private set { }
         }
 
-        public abstract void Init(BaseCard cardData);
+        private CardElementType _elementType;
+
+        public CardElementType ElementType
+        {
+            get { return _elementType; }
+            private set { }
+        }
+
+        public virtual void Init(BaseCard cardData)
+        {
+            _elementType = cardData.ElementType;
+        }
 
         private void Awake()
         {

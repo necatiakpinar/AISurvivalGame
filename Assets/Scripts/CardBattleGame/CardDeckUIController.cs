@@ -87,6 +87,7 @@ namespace Managers.CardBattleGame
             {
                 if (_playerDeckCards[i].IsSelected)
                 {
+                    Debug.LogError(_playerDeckCards[i].ElementType);
                     _playerDeckCards.Remove(_playerDeckCards[i]);
                     i--;
                 }
