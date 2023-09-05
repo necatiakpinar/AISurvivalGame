@@ -6,22 +6,20 @@ using Managers.Misc;
 using UnityEngine;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 namespace Managers
 {
     public class BattleUIWindow : MonoBehaviour
     {
-        [SerializeField] private Transform _cardParent;
+        [SerializeField] private CardDeckUIController _cardDeckController;
+        [SerializeField] private SelectedDeckUIController _selectedCardDeckController;
 
         private DataManager _dataManager;
 
-        private void Awake()
-        {
-            _dataManager = DataManager.Instance;
-        }
-
         private void Start()
         {
+            _dataManager = DataManager.Instance;;
             #region Test
 
             //Fetch data
@@ -34,42 +32,9 @@ namespace Managers
             Player.CardDeck.AddCard(characterCardData2);
             Player.CardDeck.AddCard(characterCardData3);
 
-
-            CreatePlayerBattleDeck();
+            _cardDeckController.Init(_selectedCardDeckController);
 
             #endregion
-        }
-
-        public T CreateCard<T>(CardType cardType) where T : BaseCardObject
-        {
-            if (!typeof(T).IsSubclassOf(typeof(BaseCardObject)))
-                return null;
-
-            switch (cardType)
-            {
-                case CardType.Character:
-                    return (T)(object)Instantiate(_dataManager.CardObjectContainer.CharacterCardObject, _cardParent);
-                case CardType.Item:
-                    return (T)(object)Instantiate(_dataManager.CardObjectContainer.ItemCardPF, _cardParent);
-            }
-
-            return null;
-        }
-
-        public void CreatePlayerBattleDeck()
-        {
-            if (Player.CardDeck.Cards.Count == 0)
-                return;
-
-            BaseCard baseCard;
-            for (int i = 0; i < Player.CardDeck.Cards.Count; i++)
-            {
-                baseCard = Player.CardDeck.Cards[i];
-
-                //Create card UI
-                CharacterCardObject characterCardObject = CreateCard<CharacterCardObject>(CardType.Character);
-                characterCardObject.Init(baseCard);
-            }
         }
     }
 }

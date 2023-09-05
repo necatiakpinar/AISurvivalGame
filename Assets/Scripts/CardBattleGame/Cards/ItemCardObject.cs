@@ -17,5 +17,10 @@ namespace Managers.CardBattleGame
         {
             _itemCardData = (ItemCard)cardData;
         }
+
+        protected override void OnCardClicked()
+        {
+            Debug.LogError($"{CardType} clicked!");
+        }
     }
 }

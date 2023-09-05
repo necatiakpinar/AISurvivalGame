@@ -23,5 +23,11 @@ namespace Managers.CardBattleGame
             
             Debug.LogError(_characterCardData.test);
         }
+
+        protected override void OnCardClicked()
+        {
+            base.OnCardClicked();
+            Debug.LogError($"{CardType.ToString()} clicked ");
+        }
     }
 }

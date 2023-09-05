@@ -46,6 +46,22 @@ namespace Managers.Data
                 Destroy(this);
             }
         }
+
+        public T CreateCard<T>(CardType cardType, Transform cardParent) where T : BaseCardObject
+        {
+            if (!typeof(T).IsSubclassOf(typeof(BaseCardObject)))
+                return null;
+
+            switch (cardType)
+            {
+                case CardType.Character:
+                    return (T)(object)Instantiate(_cardObjectContainer.CharacterCardObject, cardParent);
+                case CardType.Item:
+                    return (T)(object)Instantiate(_cardObjectContainer.ItemCardPF, cardParent);
+            }
+
+            return null;
+        }
         
         public T GetCard<T>(CardType cardType, CardElementType elementType) where T : BaseCard
         {

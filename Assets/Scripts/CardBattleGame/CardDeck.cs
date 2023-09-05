@@ -24,19 +24,17 @@ namespace Managers.CardBattleGame
         {
             //If card exist in the deck, just return
             for (int i = 0; i < _cards.Count; i++)
-            {
                 if (addedCard.ElementType == _cards[i].ElementType)
                     return;
-            }
 
             _cards.Add(addedCard);
         }
 
-        public void RemoveCard(BaseCard addedCard)
+        public void RemoveCard(BaseCard removedCard)
         {
             for (int i = 0; i < _cards.Count; i++)
-                if (addedCard.ElementType == _cards[i].ElementType)
-                    _cards.Remove(addedCard);
+                if (removedCard.ElementType == _cards[i].ElementType)
+                    _cards.Remove(removedCard);
         }
 
         public BaseCard GetCard(CardElementType elementType)
