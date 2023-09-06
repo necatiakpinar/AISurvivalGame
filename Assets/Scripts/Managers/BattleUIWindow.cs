@@ -33,8 +33,10 @@ namespace Managers
             Player.CardDeck.AddCard(characterCardData3);
 
             _cardDeckController.Init(_selectedCardDeckController);
+            _selectedCardDeckController.Init(_cardDeckController);
 
             #endregion
         }
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using Managers.CardBattleGame;
+﻿using System;
+using Managers.CardBattleGame;
 
 namespace Managers.Data
 {
@@ -21,7 +22,13 @@ namespace Managers.Data
             if (!_isInitialized)
             {
                 _cardDeck = new CardDeck();
+                _cardDeck.Init();
             }
+        }
+
+        public static void CleanUp()
+        {
+            _cardDeck.CleanUp();
         }
     }
 }

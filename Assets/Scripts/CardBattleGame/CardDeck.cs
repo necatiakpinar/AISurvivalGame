@@ -8,6 +8,7 @@ namespace Managers.CardBattleGame
     public class CardDeck
     {
         private List<BaseCard> _cards;
+        private List<BaseCard> _selectedCards = new List<BaseCard>();
 
         public List<BaseCard> Cards
         {
@@ -15,9 +16,27 @@ namespace Managers.CardBattleGame
             private set { }
         }
 
+        public List<BaseCard> SelectedCards
+        {
+            get { return _selectedCards; }
+            private set { }
+        }
+
         public CardDeck()
         {
             _cards = new List<BaseCard>();
+        }
+
+        public void Init()
+        {
+            EventManager.OnCardAddedToSelectedDeck += AddCardToSelectedDeck;
+            EventManager.OnCardRemovedFromSelectedDeck += RemoveCardToSelectedDeck;
+        }
+
+        public void CleanUp()
+        {
+            EventManager.OnCardAddedToSelectedDeck -= AddCardToSelectedDeck;
+            EventManager.OnCardRemovedFromSelectedDeck -= RemoveCardToSelectedDeck;
         }
 
         public void AddCard(BaseCard addedCard)
@@ -45,6 +64,20 @@ namespace Managers.CardBattleGame
 
             Debug.LogError($"{elementType} Card does not exist in the deck!");
             return null;
+        }
+
+        public void AddCardToSelectedDeck(BaseCardObject selectedCard)
+        {
+            BaseCard cardData = selectedCard.CardData;
+            if (!_selectedCards.Contains(cardData))
+                _selectedCards.Add(cardData);
+        }
+        
+        public void RemoveCardToSelectedDeck(BaseCardObject removedCard)
+        {
+            BaseCard cardData = removedCard.CardData;
+            if (_selectedCards.Contains(cardData))
+                _selectedCards.Remove(cardData);
         }
     }
 }

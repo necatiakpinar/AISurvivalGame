@@ -66,33 +66,48 @@ namespace Managers.CardBattleGame
         private void SelectCards()
         {
             BaseCardObject cardObject;
+
             for (int i = 0; i < _playerDeckCards.Count; i++)
             {
                 cardObject = _playerDeckCards[i];
                 if (cardObject && cardObject.IsSelected)
+                {
+                    cardObject.DeSelect();
                     _selectedCards.Add(cardObject);
+                }
             }
 
             RemoveCardsFromDeck();
-            
+
             if (_selectedCards.Count > 0)
                 _selectedDeckController.AddSelectedCardsToDeck(_selectedCards);
-            
+
             _selectedCards.Clear();
+        }
+
+        public void AddSelectedCardsToDeck(List<BaseCardObject> selectedCards)
+        {
+            for (int i = 0; i < selectedCards.Count; i++)
+            {
+                BaseCardObject cardObject = selectedCards[i];
+                cardObject.transform.parent = _deckContainer;
+                cardObject.transform.position = Vector3.zero;
+                _playerDeckCards.Add(cardObject);
+            }
         }
 
         private void RemoveCardsFromDeck()
         {
-            for (int i = 0; i < _playerDeckCards.Count; i++)
+            BaseCardObject cardObject;
+            for (int i = 0; i < _selectedCards.Count; i++)
             {
-                if (_playerDeckCards[i].IsSelected)
+                cardObject = _selectedCards[i];
+                if (cardObject.IsSelected)
                 {
-                    Debug.LogError(_playerDeckCards[i].ElementType);
-                    _playerDeckCards.Remove(_playerDeckCards[i]);
-                    i--;
+                    Debug.LogError("entered");
+                    _playerDeckCards.Remove(cardObject);
                 }
             }
-
         }
     }
 }

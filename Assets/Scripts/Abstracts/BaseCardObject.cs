@@ -12,16 +12,22 @@ namespace Managers.CardBattleGame
         [SerializeField] private TMP_Text _levelLabel;
         public abstract CardType CardType { get; }
 
+        private BaseCard _cardData;
         private Button _cardButton;
         private bool _isSelected;
+        private CardElementType _elementType;
+
+        public BaseCard CardData
+        {
+            get { return _cardData; }
+            private set { }
+        }
 
         public bool IsSelected
         {
             get { return _isSelected; }
             private set { }
         }
-
-        private CardElementType _elementType;
 
         public CardElementType ElementType
         {
@@ -31,6 +37,7 @@ namespace Managers.CardBattleGame
 
         public virtual void Init(BaseCard cardData)
         {
+            _cardData = cardData;
             _elementType = cardData.ElementType;
         }
 
@@ -42,12 +49,11 @@ namespace Managers.CardBattleGame
 
         protected virtual void OnCardClicked()
         {
-            Debug.LogError("Card clicked!");
             ToggleCardSelection();
             SetSelectionVisual();
         }
 
-        private void ToggleCardSelection()
+        public void ToggleCardSelection()
         {
             if (_isSelected) _isSelected = false;
             else _isSelected = true;
@@ -63,6 +69,12 @@ namespace Managers.CardBattleGame
             {
                 _cardImage.color = Color.white;
             }
+        }
+
+        public void DeSelect()
+        {
+            _isSelected = false;
+            SetSelectionVisual();
         }
     }
 }

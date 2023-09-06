@@ -10,5 +10,11 @@ namespace Managers
         {
             Player.InitGameData();
         }
+
+        private void OnApplicationQuit()
+        {
+            Debug.LogError("Player cleaned up");
+            Player.CleanUp();
+        }
     }
 }
