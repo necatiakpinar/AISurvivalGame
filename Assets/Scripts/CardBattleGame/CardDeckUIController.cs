@@ -72,7 +72,6 @@ namespace Managers.CardBattleGame
                 cardObject = _playerDeckCards[i];
                 if (cardObject && cardObject.IsSelected)
                 {
-                    cardObject.DeSelect();
                     _selectedCards.Add(cardObject);
                 }
             }
@@ -93,6 +92,7 @@ namespace Managers.CardBattleGame
                 cardObject.transform.parent = _deckContainer;
                 cardObject.transform.position = Vector3.zero;
                 _playerDeckCards.Add(cardObject);
+                EventManager.OnCardRemovedFromSelectedDeck.Invoke(cardObject);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Managers.CardBattleGame
                 cardObject = _selectedCards[i];
                 if (cardObject.IsSelected)
                 {
-                    Debug.LogError("entered");
+                    cardObject.DeSelect();
                     _playerDeckCards.Remove(cardObject);
                 }
             }

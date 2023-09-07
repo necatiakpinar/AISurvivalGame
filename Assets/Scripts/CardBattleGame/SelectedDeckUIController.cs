@@ -18,7 +18,7 @@ namespace Managers.CardBattleGame
             SetButtons();
             _cardDeckUIController = cardDeckUIController;
         }
-        
+
         public void AddSelectedCardsToDeck(List<BaseCardObject> selectedCards)
         {
             for (int i = 0; i < selectedCards.Count; i++)
@@ -30,7 +30,7 @@ namespace Managers.CardBattleGame
                 EventManager.OnCardAddedToSelectedDeck.Invoke(cardObject);
             }
         }
-        
+
         private void SetButtons()
         {
             _selectButton.onClick.AddListener(DeSelectCards);
@@ -44,34 +44,30 @@ namespace Managers.CardBattleGame
                 cardObject = _selectedCards[i];
                 if (cardObject && cardObject.IsSelected)
                 {
-                    cardObject.DeSelect();
                     _returnedCards.Add(cardObject);
-                    EventManager.OnCardRemovedFromSelectedDeck.Invoke(cardObject);
                 }
             }
 
             RemoveCardsFromDeck();
-            
+
             if (_returnedCards.Count > 0)
                 _cardDeckUIController.AddSelectedCardsToDeck(_returnedCards);
-            
+
             _returnedCards.Clear();
         }
-        
+
         private void RemoveCardsFromDeck()
         {
-            for (int i = 0; i < _selectedCards.Count; i++)
+            BaseCardObject cardObject;
+            for (int i = 0; i < _returnedCards.Count; i++)
             {
-                if (_selectedCards[i].IsSelected)
+                cardObject = _returnedCards[i];
+                if (cardObject.IsSelected)
                 {
-                    Debug.LogError(_selectedCards[i].ElementType);
-                    _selectedCards.Remove(_selectedCards[i]);
-                    i--;
+                    cardObject.DeSelect();
+                    _selectedCards.Remove(cardObject);
                 }
             }
         }
-
-        
-        
     }
 }
