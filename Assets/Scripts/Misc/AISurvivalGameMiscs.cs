@@ -14,4 +14,10 @@
         BCard = 2,
         CCard = 3
     }
+
+    public enum Scenes
+    {
+        CardSelection = 0,
+        BattleGameplay = 1
+    }
 }

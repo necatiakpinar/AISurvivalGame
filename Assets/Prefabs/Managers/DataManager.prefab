@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28dffb7d05404a1f836dcb35bfd715fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardContainer: {fileID: 11400000, guid: e7f92c805398c384d9937b1eb67e2aa0, type: 2}
+  _cardObjectContainer: {fileID: 11400000, guid: e7f92c805398c384d9937b1eb67e2aa0, type: 2}
   _characterCardContainer: {fileID: 11400000, guid: d078f1f08b9d3fe4ba5acfbf234a895d, type: 2}
   _itemCardContainer: {fileID: 11400000, guid: 024b00aa66997b048adf6d037db3eed6, type: 2}
+  _cardActorMonoContainer: {fileID: 11400000, guid: efb0db89d198e6d418fd4e44f0eb307d, type: 2}

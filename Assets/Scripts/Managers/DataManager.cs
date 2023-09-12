@@ -8,11 +8,12 @@ namespace Managers.Data
     //Right now use this as singleton, later implement addressables.
     public class DataManager : MonoBehaviour
     {
-        [FormerlySerializedAs("_cardContainer")] [Header("Data")] [SerializeField]
-        private CardObjectContainer _cardObjectContainer;
+        [Header("Data")] [SerializeField] private CardObjectContainer _cardObjectContainer;
 
         [SerializeField] private CharacterCardContainer _characterCardContainer;
         [SerializeField] private ItemCardContainer _itemCardContainer;
+
+        [Header("Mono Data")] [SerializeField] private CardActorMonoContainer _cardActorMonoContainer;
 
         public CardObjectContainer CardObjectContainer
         {
@@ -32,6 +33,8 @@ namespace Managers.Data
             private set { }
         }
 
+        public CardActorMonoContainer CardActorMonoContainer => _cardActorMonoContainer;
+        
         public static DataManager Instance;
 
         private void Awake()
@@ -62,7 +65,7 @@ namespace Managers.Data
 
             return null;
         }
-        
+
         public T GetCard<T>(CardType cardType, CardElementType elementType) where T : BaseCard
         {
             if (!typeof(T).IsSubclassOf(typeof(BaseCard)))

@@ -13,6 +13,8 @@ namespace Managers.CardBattleGame
         private List<BaseCardObject> _selectedCards = new List<BaseCardObject>();
         private List<BaseCardObject> _returnedCards = new List<BaseCardObject>();
 
+        public List<BaseCardObject> SelectedCards => _selectedCards;
+        
         public void Init(CardDeckUIController cardDeckUIController)
         {
             SetButtons();

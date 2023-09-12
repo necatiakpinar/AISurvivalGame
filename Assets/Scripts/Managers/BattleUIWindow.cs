@@ -6,7 +6,9 @@ using Managers.Misc;
 using UnityEngine;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -14,12 +16,24 @@ namespace Managers
     {
         [SerializeField] private CardDeckUIController _cardDeckController;
         [SerializeField] private SelectedDeckUIController _selectedCardDeckController;
+        [SerializeField] private Button _enterBattleButton;
 
         private DataManager _dataManager;
 
+        private void OnEnable()
+        {
+            _enterBattleButton.onClick.AddListener(OnEnterBattleButtonClicked);
+        }
+
+        private void OnDestroy()
+        {
+            _enterBattleButton.onClick.RemoveListener(OnEnterBattleButtonClicked);
+        }
+
         private void Start()
         {
-            _dataManager = DataManager.Instance;;
+            _dataManager = DataManager.Instance;
+            
             #region Test
 
             //Fetch data
@@ -37,6 +51,13 @@ namespace Managers
 
             #endregion
         }
-        
+
+        private void OnEnterBattleButtonClicked()
+        {
+            if (_selectedCardDeckController.SelectedCards.Count > 0)
+                SceneManager.LoadScene((int)Scenes.BattleGameplay);
+            
+            Debug.LogError("You don't have any selected card to enter the GAME!");
+        }
     }
 }
